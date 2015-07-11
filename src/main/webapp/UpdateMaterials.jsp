@@ -132,6 +132,9 @@
       <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
 
+	<!-- Adding editors -->
+	<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
+	<script type="text/javascript" src="https://editor.datatables.net/media/js/dataTables.editor.min.js"></script>
 	
 	
 	
@@ -154,6 +157,39 @@
     <script type="text/javascript">
       $(function () {
         
+   	  editor = new $.fn.dataTable.Editor( {
+   	        ajax: "../php/staff.php",
+   	        table: "#example1",
+   	        fields: [ {
+   	                label: "First name:",
+   	                name: "first_name"
+   	            }, {
+   	                label: "Last name:",
+   	                name: "last_name"
+   	            }, {
+   	                label: "Position:",
+   	                name: "position"
+   	            }, {
+   	                label: "Office:",
+   	                name: "office"
+   	            }, {
+   	                label: "Extension:",
+   	                name: "extn"
+   	            }, {
+   	                label: "Start date:",
+   	                name: "start_date",
+   	                type: "date"
+   	            }, {
+   	                label: "Salary:",
+   	                name: "salary"
+   	            }
+   	        ]
+   	    } );
+   		// Activate an inline edit on click of a table cell
+   	    $('#example1').on( 'click', 'tbody td:not(:first-child)', function (e) {
+   	        editor.inline( this );
+   	    } );
+    	
         var table = $('#example1').dataTable({
         	"bPaginate": true,
             "bLengthChange": false,
@@ -161,7 +197,16 @@
             "bSort": false,
             "bInfo": true,
         	'bAutoWidth': false,
-        	"ajax": "./GetMaterialsServlet"
+        	"ajax": "./GetMaterialsServlet",
+        	tableTools: {
+                sRowSelect: "os",
+                sRowSelector: 'td:first-child',
+                aButtons: [
+                    { sExtends: "editor_create", editor: editor },
+                    { sExtends: "editor_edit",   editor: editor },
+                    { sExtends: "editor_remove", editor: editor }
+                ]
+            }
         	});
       });
     </script>

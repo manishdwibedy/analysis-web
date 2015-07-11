@@ -25,7 +25,7 @@
 
 		<li class="header">MAIN NAVIGATION - 1.0.2</li>
 		<li class="<%= showIndex %>">
-			<a href="../index.jsp"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+			<a href="./index.jsp"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
 		</li>
 
 		<li class="treeview">
@@ -36,8 +36,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i>Add a material</a></li>
-            <li><a href="ViewMaterials.jsp"><i class="fa fa-circle-o"></i>View Materials</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i>Update materials</a></li>
+            <li><a href="./ViewMaterials.jsp"><i class="fa fa-circle-o"></i>View Materials</a></li>
+            <li><a href="./UpdateMaterials.jsp"><i class="fa fa-circle-o"></i>Update materials</a></li>
             <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i>Delete materials</a></li>
           </ul>
         </li>
