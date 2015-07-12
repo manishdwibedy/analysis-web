@@ -48,17 +48,49 @@
    	<script src="./js/demo.js" ></script>
 	<link rel="stylesheet" type="text/css" href="./css/demo.css" media="screen"/>
 	<script type="text/javascript">
-		window.onload = function() { 
-			// you can use "datasource/demo.php" if you have PHP installed, to get live data from the demo.csv file
-			editableGrid.onloadJSON("grid.json"); 
-		}; 
+// 		window.onload = function() { 
+// 			you can use "datasource/demo.php" if you have PHP installed, to get live data from the demo.csv file
+// 			editableGrid.onloadJSON("grid.json"); 
+// 		}; 
 	</script>
 	
 	<script type="text/javascript">
+		var changes = [];
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
  			editableGrid.onloadJSON("./GetMaterialsServlet?mode=edit"); 
 		} 
+		
+		$(document).ready( function () {
+			$("#UpdateMaterials").click(function() {
+				console.log(changes);
+				$.ajax({
+					url : "./UpdateMaterialsServlet",
+					data : {
+						changes : JSON.stringify(changes)			// look here!
+					},
+					dataType : 'json',
+					success : function(data) {
+						if(data.success)
+						{
+							changes = [];
+							console.log("success");	
+						}
+						else
+						{
+							console.log("could not save");
+						}
+						
+					},
+					error : function(data) {
+						console.log("error");
+					}
+					
+				});
+			});
+		});
+		
+		
 	</script>	
 	
   </head>
@@ -106,8 +138,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Data Tables
-            <small>advanced tables</small>
+            Update Materials
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -134,18 +165,6 @@
 					<option value="40">40</option>
 					<option value="50">50</option>
 				</select>
-				&nbsp;&nbsp;
-				<label for="barcount">Bars in chart: </label>
-				<select id="barcount" name="barcount">
-					<option value="5">5</option>
-					<option value="10">10</option>
-					<option value="15">15</option>
-					<option value="20">20</option>
-					<option value="25">25</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select>	
 			</div>
 		
 			<!-- Grid filter -->
@@ -158,8 +177,8 @@
 			<!-- Paginator control -->
 			<div id="paginator"></div>
 		
-			<!-- Edition zone (to demonstrate the "fixed" editor mode) -->
-			<div id="edition"></div>
+			
+			<button id="UpdateMaterials" type="button" class="btn btn-primary btn-block">Update</button>
 			
 			
           <!-- <div class="row">

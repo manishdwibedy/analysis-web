@@ -72,8 +72,14 @@ public class GetMaterialsServlet extends HttpServlet {
 				case "unit":
 					metadata.setDatatype("string");
 					break;
+					//Rs,2,dot,comma,1
+				case "quantity":
+					metadata.setDatatype("double(,2,dot,comma,1)");
+					break;
+				case "price":
+					metadata.setDatatype("double(Rs,2,dot,comma,1)");
 				default:
-					metadata.setDatatype("double(m,2)");
+					//metadata.setDatatype("double(m,2)");
 			}
 			metadata.setEditable(false);
 			metadataList.add(metadata);

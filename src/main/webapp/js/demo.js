@@ -99,6 +99,12 @@ EditableGrid.prototype.initializeGrid = function()
 
 		// register the function that will handle model changes
 		modelChanged = function(rowIndex, columnIndex, oldValue, newValue, row) { 
+			var change = new Object();
+			change.column = columnIndex;
+			change.value = newValue;
+			change.code = row.children[0].textContent;
+			
+			changes.push(change);
 			displayMessage("Value for '" + this.getColumnName(columnIndex) + "' in row " + this.getRowId(rowIndex) + " has changed from '" + oldValue + "' to '" + newValue + "'");
 //			if (this.getColumnName(columnIndex) == "continent") this.setValueAt(rowIndex, this.getColumnIndex("country"), ""); // if we changed the continent, reset the country
 			this.renderCharts();
@@ -134,7 +140,7 @@ EditableGrid.prototype.initializeGrid = function()
 		}})); 
 
 		// render the grid (parameters will be ignored if we have attached to an existing HTML table)
-		renderGrid("tablecontent", "testgrid", "tableid");
+		renderGrid("tablecontent", "testgrid table-bordered", "tableid");
 
 		// set active (stored) filter if any
 		_$('filter').value = currentFilter ? currentFilter : '';
