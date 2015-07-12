@@ -161,7 +161,7 @@
             "bSort": false,
             "bInfo": true,
         	'bAutoWidth': false,
-        	"ajax": "./GetMaterialsServlet"
+        	"ajax": "./GetMaterialsServlet?mode=view"
         	});
       });
     </script>

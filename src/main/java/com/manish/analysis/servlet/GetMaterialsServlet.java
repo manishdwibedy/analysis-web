@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.manish.analysis.model.GenericModel;
+import com.manish.analysis.model.MaterialJson;
+import com.manish.analysis.model.Metadata;
 import com.manish.model.Material;
 
 
@@ -26,17 +29,72 @@ public class GetMaterialsServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	private String[] columns = new String[]{"code","description","unit","quantity","price"};
     public GetMaterialsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		PrintWriter writer = response.getWriter();
+		
+		Data data = new Data();
+		response.setContentType("application/json");     
+		
+		String json = FetchMaterials.getMaterials();
+		
+		Type listType = new TypeToken<ArrayList<Material>>() {}.getType();
+        
+		List<Material> materials = new Gson().fromJson(json, listType);
+		data.data = convert(materials);
+		
+		//GenericModel model = convert(materials);
+		//writer.print(new Gson().toJson(model));
+		String mode = request.getParameter("mode");
+		
+		List<Metadata> metadataList = new ArrayList<Metadata>();
+		
+		for(String columnName : columns)
+		{
+			Metadata metadata = new Metadata();
+			metadata.setName(columnName);
+			metadata.setLabel(columnName.toUpperCase());
+			switch(columnName)
+			{
+				case "code":
+				case "description":
+				case "unit":
+					metadata.setDatatype("string");
+					break;
+				default:
+					metadata.setDatatype("double(m,2)");
+			}
+			metadata.setEditable(false);
+			metadataList.add(metadata);
+		}
+		switch(mode)
+		{
+			case "view":
+				break;
+			case "edit":
+				for(Metadata metadata : metadataList)
+				{
+					if(!metadata.getName().equalsIgnoreCase("code"))
+					{
+						metadata.setEditable(true);
+					}
+				}
+				break;
+		}
+		data.metadata = metadataList;
+		writer.write(new Gson().toJson(data));
+		/*PrintWriter writer = response.getWriter();
 		
 		response.setContentType("application/json");     
 		
@@ -48,7 +106,7 @@ public class GetMaterialsServlet extends HttpServlet {
 		
 		
 		GenericModel model = convert(materials);
-		writer.print(new Gson().toJson(model));
+		writer.print(new Gson().toJson(model));*/
 	}
 
 	/**
@@ -58,25 +116,39 @@ public class GetMaterialsServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 	
-	private GenericModel convert(List<Material> materials)
+	private List<TableData> convert(List<Material> materials)
 	{
-		GenericModel model = new GenericModel();
-		String[][] data= new String [materials.size()][5];
 		int count = 0;
+		List<TableData> materialList = new ArrayList<TableData>();
 		for(Material material : materials)
 		{
-			String[] materialData = new String[5];
-			materialData[0] = material.getCode();
-			materialData[1] = new String(material.getDescription());
-			materialData[2] = material.getUnit();
-			materialData[3] = String.valueOf(material.getQuantity());
-			materialData[4] = String.valueOf(material.getPrice());
+			TableData data = new TableData();
+			data.id = ++count;
+			//String[] materialData = new String[5];
+			MaterialJson materialObj = new MaterialJson();
+			materialObj.setCode(material.getCode());
+			materialObj.setDescription(new String(material.getDescription()));
+			materialObj.setUnit(material.getUnit());
+			materialObj.setQuantity(material.getQuantity());
+			materialObj.setPrice(material.getPrice());
 			
-			data[count++] = materialData;
+			data.values = materialObj;
+			materialList.add(data);
 		}
-		model.setData(data);
-		return model;
+		return materialList;
 		
 	}
+	
+	
 
+}
+
+class Data{
+	List<Metadata> metadata;
+	List<TableData> data;
+}
+
+class TableData{
+	int id;
+	MaterialJson values;
 }

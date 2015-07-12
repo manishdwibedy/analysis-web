@@ -26,6 +26,41 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- include javascript and css files for the EditableGrid library -->
+	<script src="./js/editablegrid.js"></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_renderers.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_editors.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_validators.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_utils.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_charts.js" ></script>
+	<link rel="stylesheet" href="./css/editablegrid.css" type="text/css" media="screen">
+
+	<!-- include javascript and css files for jQuery, needed for the datepicker and autocomplete extensions -->
+	<script src="./js/extensions/jquery/jquery-1.6.4.min.js" ></script>
+	<script src="./js/extensions/jquery/jquery-ui-1.8.16.custom.min.js" ></script>
+	<link rel="stylesheet" href="./js/extensions/jquery/jquery-ui-1.8.16.custom.css" type="text/css" media="screen">
+	
+	<!-- include javascript and css files for the autocomplete extension -->
+	<script src="./js/extensions/autocomplete/autocomplete.js" ></script>
+	<link rel="stylesheet" href="./js/extensions/autocomplete/autocomplete.css" type="text/css" media="screen">
+   
+   	<script src="./js/demo.js" ></script>
+	<link rel="stylesheet" type="text/css" href="./css/demo.css" media="screen"/>
+	<script type="text/javascript">
+		window.onload = function() { 
+			// you can use "datasource/demo.php" if you have PHP installed, to get live data from the demo.csv file
+			editableGrid.onloadJSON("grid.json"); 
+		}; 
+	</script>
+	
+	<script type="text/javascript">
+		window.onload = function() { 
+			//editableGrid.onloadJSON("grid.json");
+ 			editableGrid.onloadJSON("./GetMaterialsServlet?mode=edit"); 
+		} 
+	</script>	
+	
   </head>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
@@ -83,14 +118,58 @@
 
         <!-- Main content -->
         <section class="content">
-          <div class="row">
+        
+        <div id="message"></div>
+
+			<!--  Number of rows per page and bars in chart -->
+			<div id="pagecontrol">
+				<label for="pagecontrol">Rows per page: </label>
+				<select id="pagesize" name="pagesize">
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="50">50</option>
+				</select>
+				&nbsp;&nbsp;
+				<label for="barcount">Bars in chart: </label>
+				<select id="barcount" name="barcount">
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="50">50</option>
+				</select>	
+			</div>
+		
+			<!-- Grid filter -->
+			<label for="filter">Filter :</label>
+			<input type="text" id="filter"/>
+		
+			<!-- Grid contents -->
+			<div id="tablecontent"></div>
+			
+			<!-- Paginator control -->
+			<div id="paginator"></div>
+		
+			<!-- Edition zone (to demonstrate the "fixed" editor mode) -->
+			<div id="edition"></div>
+			
+			
+          <!-- <div class="row">
             <div class="col-xs-12">
             
          
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Data Table With Full Features</h3>
-                </div><!-- /.box-header -->
+                </div>/.box-header
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
@@ -112,10 +191,10 @@
                       </tr>
                     </tfoot>
                   </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div><!-- /.col -->
-          </div><!-- /.row -->
+                </div>/.box-body
+              </div>/.box
+            </div>/.col
+          </div>/.row -->
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
@@ -132,10 +211,6 @@
       <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
 
-	<!-- Adding editors -->
-	<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
-	<script type="text/javascript" src="https://editor.datatables.net/media/js/dataTables.editor.min.js"></script>
-	
 	
 	
     <!-- jQuery 2.1.4 -->
@@ -154,62 +229,10 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
     <!-- page script -->
-    <script type="text/javascript">
-      $(function () {
-        
-   	  editor = new $.fn.dataTable.Editor( {
-   	        ajax: "../php/staff.php",
-   	        table: "#example1",
-   	        fields: [ {
-   	                label: "First name:",
-   	                name: "first_name"
-   	            }, {
-   	                label: "Last name:",
-   	                name: "last_name"
-   	            }, {
-   	                label: "Position:",
-   	                name: "position"
-   	            }, {
-   	                label: "Office:",
-   	                name: "office"
-   	            }, {
-   	                label: "Extension:",
-   	                name: "extn"
-   	            }, {
-   	                label: "Start date:",
-   	                name: "start_date",
-   	                type: "date"
-   	            }, {
-   	                label: "Salary:",
-   	                name: "salary"
-   	            }
-   	        ]
-   	    } );
-   		// Activate an inline edit on click of a table cell
-   	    $('#example1').on( 'click', 'tbody td:not(:first-child)', function (e) {
-   	        editor.inline( this );
-   	    } );
-    	
-        var table = $('#example1').dataTable({
-        	"bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": false,
-            "bInfo": true,
-        	'bAutoWidth': false,
-        	"ajax": "./GetMaterialsServlet",
-        	tableTools: {
-                sRowSelect: "os",
-                sRowSelector: 'td:first-child',
-                aButtons: [
-                    { sExtends: "editor_create", editor: editor },
-                    { sExtends: "editor_edit",   editor: editor },
-                    { sExtends: "editor_remove", editor: editor }
-                ]
-            }
-        	});
-      });
-    </script>
+    
 
+<!-- Feedback message zone -->
+			
+			
   </body>
 </html>
