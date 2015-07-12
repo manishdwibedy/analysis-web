@@ -4,6 +4,11 @@
 
 <web-app id="WebApp_ID">
   <display-name>AnalysisWeb</display-name>
+  <listener>
+	<listener-class>
+             com.manish.analysis.context.AnalysisContextListener  
+        </listener-class>
+   </listener>
   <servlet>
   	<servlet-name>GetMaterialsServlet</servlet-name>
   	<display-name>GetMaterialsServlet</display-name>

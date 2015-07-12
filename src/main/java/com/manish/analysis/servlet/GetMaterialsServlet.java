@@ -3,6 +3,7 @@ package com.manish.analysis.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.manish.analysis.db.Connection;
 import com.manish.analysis.model.GenericModel;
 import com.manish.analysis.model.MaterialJson;
 import com.manish.analysis.model.Metadata;
@@ -47,15 +51,13 @@ public class GetMaterialsServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = FetchMaterials.getMaterials();
+		String json = getMaterials();
 		
 		Type listType = new TypeToken<ArrayList<Material>>() {}.getType();
         
 		List<Material> materials = new Gson().fromJson(json, listType);
 		data.data = convert(materials);
 		
-		//GenericModel model = convert(materials);
-		//writer.print(new Gson().toJson(model));
 		String mode = request.getParameter("mode");
 		
 		List<Metadata> metadataList = new ArrayList<Metadata>();
@@ -100,19 +102,6 @@ public class GetMaterialsServlet extends HttpServlet {
 		}
 		data.metadata = metadataList;
 		writer.write(new Gson().toJson(data));
-		/*PrintWriter writer = response.getWriter();
-		
-		response.setContentType("application/json");     
-		
-		String json = FetchMaterials.getMaterials();
-		
-		Type listType = new TypeToken<ArrayList<Material>>() {}.getType();
-        
-		List<Material> materials = new Gson().fromJson(json, listType);
-		
-		
-		GenericModel model = convert(materials);
-		writer.print(new Gson().toJson(model));*/
 	}
 
 	/**
@@ -145,7 +134,26 @@ public class GetMaterialsServlet extends HttpServlet {
 		
 	}
 	
-	
+	public static String getMaterials() {
+		// TODO Auto-generated method stub
+		// get our query builder from the DAO
+		QueryBuilder<Material, ?> queryBuilder = Connection.getMaterialDao().queryBuilder();
+		// the 'title' field must be equal to title (a variable)
+		try {
+			// prepare our sql statement
+			PreparedQuery<Material> preparedQuery = queryBuilder.prepare();
+
+			// query for all stories that have that title
+			List<Material> materialsList = Connection.getMaterialDao().query(preparedQuery);
+
+			return new Gson().toJson(materialsList);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 
 }
 
