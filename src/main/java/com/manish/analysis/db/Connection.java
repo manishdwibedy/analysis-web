@@ -23,19 +23,21 @@ public class Connection {
 	private static Dao<Item, String> itemDao;
 	
 	private final String databaseUrl = "jdbc:mysql://localhost:3306/rateanalysis"; 
-	public void createDB() throws SQLException {
+	public void createDB(boolean createTable) throws SQLException {
 		// create a connection source to our database
 		connectionSource = new JdbcConnectionSource(databaseUrl);
 		// create a connection source to our database
 		connectionSource = new JdbcConnectionSource(databaseUrl);
 		((JdbcConnectionSource) connectionSource).setUsername("root");
-				
-		//TableUtils.createTableIfNotExists(connectionSource, Material.class);
-		//TableUtils.createTableIfNotExists(connectionSource, Labour.class);
-		//TableUtils.createTableIfNotExists(connectionSource, Hire.class);
-		//TableUtils.createTableIfNotExists(connectionSource, Carriage.class);
-		//TableUtils.createTableIfNotExists(connectionSource, Constants.class);
 		
+		if(createTable)
+		{
+			TableUtils.createTableIfNotExists(connectionSource, Material.class);
+			TableUtils.createTableIfNotExists(connectionSource, Labour.class);
+			TableUtils.createTableIfNotExists(connectionSource, Hire.class);
+			TableUtils.createTableIfNotExists(connectionSource, Carriage.class);
+			TableUtils.createTableIfNotExists(connectionSource, Constants.class);	
+		}
 		
 		// instantiate the dao
 		materialDao = DaoManager.createDao(connectionSource, Material.class);
