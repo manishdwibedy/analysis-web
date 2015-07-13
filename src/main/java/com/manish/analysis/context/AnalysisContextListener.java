@@ -25,7 +25,7 @@ public class AnalysisContextListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent arg0) {
 		System.out.println("ServletContextListener started");
 		try {
-			connection.createDB();
+			connection.createDB(false);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
