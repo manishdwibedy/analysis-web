@@ -26,6 +26,37 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- include javascript and css files for the EditableGrid library -->
+	<script src="./js/editablegrid.js"></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_renderers.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_editors.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_validators.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_utils.js" ></script>
+	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_charts.js" ></script>
+	<link rel="stylesheet" href="./css/editablegrid.css" type="text/css" media="screen">
+
+	<!-- include javascript and css files for jQuery, needed for the datepicker and autocomplete extensions -->
+	<script src="./js/extensions/jquery/jquery-1.6.4.min.js" ></script>
+	<script src="./js/extensions/jquery/jquery-ui-1.8.16.custom.min.js" ></script>
+	<link rel="stylesheet" href="./js/extensions/jquery/jquery-ui-1.8.16.custom.css" type="text/css" media="screen">
+	
+	
+   	<script src="./js/demo.js" ></script>
+	<link rel="stylesheet" type="text/css" href="./css/demo.css" media="screen"/>
+	
+	<link rel="stylesheet" type="text/css" href="./css/style.css" media="screen"/>
+	<script type="text/javascript">
+		$(document).ready( function () {	
+			$(document.body).addClass('loading');
+		});
+	
+		window.onload = function() { 
+			//editableGrid.onloadJSON("grid.json");
+ 			editableGrid.onloadJSON("./GetMaterialsServlet?mode=view"); 
+		} 
+		
+	</script>
   </head>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
@@ -83,39 +114,32 @@
 
         <!-- Main content -->
         <section class="content">
-          <div class="row">
-            <div class="col-xs-12">
             
-         
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Data Table With Full Features</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Code</th>
-                        <th>Description</th>
-                        <th>Unit</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Code</th>
-                        <th>Description</th>
-                        <th>Unit</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div><!-- /.col -->
-          </div><!-- /.row -->
+            <div id="message" style="display:none"></div>
+
+			<!--  Number of rows per page and bars in chart -->
+			<div id="pagecontrol">
+				<label for="pagecontrol">Rows per page: </label>
+				<select id="pagesize" name="pagesize">
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="50">50</option>
+				</select>
+			</div>
+		
+			<!-- Grid filter -->
+			<label for="filter">Filter :</label>
+			<input type="text" id="filter"/>
+		
+			<!-- Grid contents -->
+			<div id="tablecontent"></div>
+			
+			<!-- Paginator control -->
+			<div id="paginator"></div>
+            
+            
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">

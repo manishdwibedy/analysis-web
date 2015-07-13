@@ -26,16 +26,16 @@ public class Connection {
 	public void createDB() throws SQLException {
 		// create a connection source to our database
 		connectionSource = new JdbcConnectionSource(databaseUrl);
-		
-		TableUtils.createTableIfNotExists(connectionSource, Material.class);
-		TableUtils.createTableIfNotExists(connectionSource, Labour.class);
-		TableUtils.createTableIfNotExists(connectionSource, Hire.class);
-		TableUtils.createTableIfNotExists(connectionSource, Carriage.class);
-		TableUtils.createTableIfNotExists(connectionSource, Constants.class);
-		
 		// create a connection source to our database
 		connectionSource = new JdbcConnectionSource(databaseUrl);
 		((JdbcConnectionSource) connectionSource).setUsername("root");
+				
+		//TableUtils.createTableIfNotExists(connectionSource, Material.class);
+		//TableUtils.createTableIfNotExists(connectionSource, Labour.class);
+		//TableUtils.createTableIfNotExists(connectionSource, Hire.class);
+		//TableUtils.createTableIfNotExists(connectionSource, Carriage.class);
+		//TableUtils.createTableIfNotExists(connectionSource, Constants.class);
+		
 		
 		// instantiate the dao
 		materialDao = DaoManager.createDao(connectionSource, Material.class);

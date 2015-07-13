@@ -173,7 +173,13 @@ EditableGrid.prototype.onloadJSON = function(url)
 		displayMessage("Grid loaded from JSON: " + this.getRowCount() + " row(s)"); 
 		this.initializeGrid();
 	};
-
+	
+	setTimeout(function(){
+		$(document.body).removeClass('loading');
+	}, 1000);
+	
+	
+	
 	// load JSON URL
 	this.loadJSON(url);
 };
