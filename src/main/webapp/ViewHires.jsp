@@ -91,7 +91,7 @@
           
           
           <jsp:include page="./common/sidebar.jsp">
-          <jsp:param name="page" value="viewhires" />
+          	<jsp:param name="page" value="viewhires" />
           </jsp:include>
         </section>
         <!-- /.sidebar -->

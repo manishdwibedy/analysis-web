@@ -91,7 +91,7 @@
           
           
           <jsp:include page="./common/sidebar.jsp">
-          <jsp:param name="page" value="viewconstants" />
+          	<jsp:param name="page" value="viewconstants" />
           </jsp:include>
         </section>
         <!-- /.sidebar -->
