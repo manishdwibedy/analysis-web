@@ -14,13 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.manish.analysis.db.Connection;
+import com.manish.analysis.model.Changes;
+import com.manish.analysis.model.Response;
 import com.manish.model.Material;
-import com.manish.test.orm.Account;
 
 /**
  * Servlet implementation class UpdateMaterialsServlet
@@ -52,13 +50,13 @@ public class UpdateMaterialsServlet extends HttpServlet {
 		List<Changes> changes = gson.fromJson(json, listType);
 		
 		String column = "";
-		responseObj.success = true;
+		responseObj.setSuccess(true);
 		for(Changes change : changes)
 		{
 			column = "";
 			UpdateBuilder<Material, ?> updateBuilder = Connection.getMaterialDao().updateBuilder();
 			// update the password to be "none"
-			switch(change.column)
+			switch(change.getColumn())
 			{
 				case 1:
 					column = "description";
@@ -74,22 +72,22 @@ public class UpdateMaterialsServlet extends HttpServlet {
 					break;
 			}
 			try {
-				updateBuilder.updateColumnValue(column, change.value);
+				updateBuilder.updateColumnValue(column, change.getValue());
 				
-				updateBuilder.where().eq("code", String.valueOf(change.code));
+				updateBuilder.where().eq("code", String.valueOf(change.getCode()));
 				updateBuilder.update();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				responseObj.success = false;
-				responseObj.response = e.getMessage();
+				responseObj.setSuccess(false);
+				responseObj.setResponse(e.getMessage());
 				break;
 			}
 		}
 		
-		if(responseObj.success)
+		if(responseObj.isSuccess())
 		{
-			responseObj.response = changes.size() + " Materials Updated.";
+			responseObj.setResponse(changes.size() + " Materials Updated.");
 		}
 		
 		
@@ -102,15 +100,4 @@ public class UpdateMaterialsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-}
-
-class Changes{
-	int code;
-	int column;
-	String value;
-}
-
-class Response{
-	boolean success;
-	String response;
 }
