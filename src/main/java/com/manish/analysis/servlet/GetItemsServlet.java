@@ -62,7 +62,7 @@ public class GetItemsServlet extends HttpServlet {
 		
 		List<Metadata> metadataList = new ArrayList<Metadata>();
 		
-		for(String columnName : Util.getColumns())
+		for(String columnName : Util.getItemColumns())
 		{
 			Metadata metadata = new Metadata();
 			metadata.setName(columnName);

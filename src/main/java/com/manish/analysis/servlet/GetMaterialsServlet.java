@@ -63,7 +63,7 @@ public class GetMaterialsServlet extends HttpServlet {
 		
 		List<Metadata> metadataList = new ArrayList<Metadata>();
 		
-		for(String columnName : Util.getColumns())
+		for(String columnName : Util.getBaseColumns())
 		{
 			Metadata metadata = new Metadata();
 			metadata.setName(columnName);
