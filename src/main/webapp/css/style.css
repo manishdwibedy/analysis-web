@@ -9,3 +9,7 @@
 table.testgrid td{
 	height:40px;
 }
+
+span.caret{
+	height: 20px;
+}

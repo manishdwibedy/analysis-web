@@ -69,6 +69,12 @@
 		<description></description>
 		<servlet-class>com.manish.analysis.servlet.UpdateConstantsServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>GetItemsServlet</servlet-name>
+		<display-name>GetItemsServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.GetItemsServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>GetMaterialsServlet</servlet-name>
 		<url-pattern>/GetMaterials</url-pattern>
@@ -108,6 +114,10 @@
 	<servlet-mapping>
 		<servlet-name>UpdateConstantsServlet</servlet-name>
 		<url-pattern>/UpdateConstants</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetItemsServlet</servlet-name>
+		<url-pattern>/GetItems</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

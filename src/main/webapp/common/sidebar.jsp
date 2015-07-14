@@ -9,12 +9,13 @@
 <body>
 	<%
 	String pageName = request.getParameter("page");
-	String showIndex="", showMaterial ="", showLabour = "", showHire = "", showCarriage = "", showConstant = "";
+	String showIndex="", showMaterial ="", showLabour = "", showHire = "", showCarriage = "", showConstant = "", showItem = "";
 	String showViewMaterials="", showUpdateMaterials = "";
 	String showViewLabours = "", showUpdateLabours = "";
 	String showViewHires = "", showUpdateHires = "";
 	String showViewCarriage = "", showUpdateCarriages = "";
 	String showViewConstants = "", showUpdateConstants = "";
+	String showViewItems = "", showViewItemByUnit = "";
 	
 	if (pageName.equalsIgnoreCase("index"))		
 	{
@@ -69,6 +70,16 @@
 	{
 		showConstant = "active";
 		showUpdateConstants = "active";
+	}
+	else if (pageName.equalsIgnoreCase("viewitems"))
+	{
+		showItem = "active";
+		showViewItems = "active";
+	}
+	else if (pageName.equalsIgnoreCase("viewitemsbyunit"))
+	{
+		showItem = "active";
+		showViewItemByUnit = "active";
 	}
 	
 	
@@ -153,7 +164,7 @@
           </ul>
         </li>
         
-        <li class="treeview">
+        <li class="treeview <%= showItem %>">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span>Item</span>
@@ -161,7 +172,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="#"><i class="fa fa-circle-o"></i>Add Item</a></li>
-            <li><a href="./ViewItems.jsp"><i class="fa fa-circle-o"></i>View Items</a></li>
+            <li class="<%= showViewItems %>"><a href="./ViewItems.jsp"><i class="fa fa-circle-o"></i>View All Items</a></li>
+            <li class="<%= showViewItemByUnit %>"><a href="./ViewItemsByUnit.jsp"><i class="fa fa-circle-o"></i>View Items by Unit</a></li>
             <li><a href="./UpdateItems.jsp"><i class="fa fa-circle-o"></i>Update Items</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Delete Items</a></li>
           </ul>
