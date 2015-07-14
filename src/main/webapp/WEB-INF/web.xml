@@ -45,6 +45,30 @@
 		<description></description>
 		<servlet-class>com.manish.analysis.servlet.GetConstantsServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>UpdateLaboursServlet</servlet-name>
+		<display-name>UpdateLaboursServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.UpdateLaboursServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UpdateHiresServlet</servlet-name>
+		<display-name>UpdateHiresServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.UpdateHiresServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UpdateCarriagesServlet</servlet-name>
+		<display-name>UpdateCarriagesServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.UpdateCarriagesServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UpdateConstantsServlet</servlet-name>
+		<display-name>UpdateConstantsServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.UpdateConstantsServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>GetMaterialsServlet</servlet-name>
 		<url-pattern>/GetMaterials</url-pattern>
@@ -68,6 +92,22 @@
 	<servlet-mapping>
 		<servlet-name>GetConstantsServlet</servlet-name>
 		<url-pattern>/GetConstants</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateLaboursServlet</servlet-name>
+		<url-pattern>/UpdateLabours</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateHiresServlet</servlet-name>
+		<url-pattern>/UpdateHires</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateCarriagesServlet</servlet-name>
+		<url-pattern>/UpdateCarriages</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateConstantsServlet</servlet-name>
+		<url-pattern>/UpdateConstants</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
