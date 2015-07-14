@@ -17,31 +17,29 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.Data;
 import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
 import com.manish.analysis.util.Util;
+import com.manish.model.Labour;
 import com.manish.model.Material;
 
-
 /**
- * Servlet implementation class GetMaterialsServlet
+ * Servlet implementation class GetLaboursServlet
  */
-public class GetMaterialsServlet extends HttpServlet {
+public class GetLaboursServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-	
-    public GetMaterialsServlet() {
+    public GetLaboursServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    
-	/**
+    /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,12 +50,12 @@ public class GetMaterialsServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getMaterials();
+		String json = getLabours();
 		
-		Type listType = new TypeToken<ArrayList<Material>>() {}.getType();
+		Type listType = new TypeToken<ArrayList<Labour>>() {}.getType();
         
-		List<Material> materials = new Gson().fromJson(json, listType);
-		data.setData(convert(materials));
+		List<Labour> labours = new Gson().fromJson(json, listType);
+		data.setData(convert(labours));
 		
 		String mode = request.getParameter("mode");
 		
@@ -112,42 +110,42 @@ public class GetMaterialsServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 	
-	private List<TableData> convert(List<Material> materials)
+	private List<TableData> convert(List<Labour> labours)
 	{
 		int count = 0;
-		List<TableData> materialList = new ArrayList<TableData>();
-		for(Material material : materials)
+		List<TableData> labourList = new ArrayList<TableData>();
+		for(Labour labour : labours)
 		{
 			TableData data = new TableData();
 			data.setId(++count);
 			//String[] materialData = new String[5];
-			BaseRateJson materialObj = new BaseRateJson();
-			materialObj.setCode(material.getCode());
-			materialObj.setDescription(new String(material.getDescription()));
-			materialObj.setUnit(material.getUnit());
-			materialObj.setQuantity(material.getQuantity());
-			materialObj.setPrice(material.getPrice());
+			BaseRateJson labourObj = new BaseRateJson();
+			labourObj.setCode(labour.getCode());
+			labourObj.setDescription(new String(labour.getDescription()));
+			labourObj.setUnit(labour.getUnit());
+			labourObj.setQuantity(labour.getQuantity());
+			labourObj.setPrice(labour.getPrice());
 			
-			data.setValues(materialObj);
-			materialList.add(data);
+			data.setValues(labourObj);
+			labourList.add(data);
 		}
-		return materialList;
+		return labourList;
 		
 	}
 	
-	public static String getMaterials() {
+	public static String getLabours() {
 		// TODO Auto-generated method stub
 		// get our query builder from the DAO
-		QueryBuilder<Material, ?> queryBuilder = Connection.getMaterialDao().queryBuilder();
+		QueryBuilder<Labour, ?> queryBuilder = Connection.getLabourDao().queryBuilder();
 		// the 'title' field must be equal to title (a variable)
 		try {
 			// prepare our sql statement
-			PreparedQuery<Material> preparedQuery = queryBuilder.prepare();
+			PreparedQuery<Labour> preparedQuery = queryBuilder.prepare();
 
 			// query for all stories that have that title
-			List<Material> materialsList = Connection.getMaterialDao().query(preparedQuery);
+			List<Labour> laboursList = Connection.getLabourDao().query(preparedQuery);
 
-			return new Gson().toJson(materialsList);
+			return new Gson().toJson(laboursList);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,6 +154,5 @@ public class GetMaterialsServlet extends HttpServlet {
 		
 	}
 
+
 }
-
-

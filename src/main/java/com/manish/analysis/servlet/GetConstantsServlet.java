@@ -17,34 +17,31 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.Data;
 import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
 import com.manish.analysis.util.Util;
-import com.manish.model.Material;
-
+import com.manish.model.Constants;
 
 /**
- * Servlet implementation class GetMaterialsServlet
+ * Servlet implementation class GetConstantsServlet
  */
-public class GetMaterialsServlet extends HttpServlet {
+public class GetConstantsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-	
-    public GetMaterialsServlet() {
+    public GetConstantsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		PrintWriter writer = response.getWriter();
@@ -52,12 +49,12 @@ public class GetMaterialsServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getMaterials();
+		String json = getConstants();
 		
-		Type listType = new TypeToken<ArrayList<Material>>() {}.getType();
+		Type listType = new TypeToken<ArrayList<Constants>>() {}.getType();
         
-		List<Material> materials = new Gson().fromJson(json, listType);
-		data.setData(convert(materials));
+		List<Constants> constants = new Gson().fromJson(json, listType);
+		data.setData(convert(constants));
 		
 		String mode = request.getParameter("mode");
 		
@@ -112,42 +109,42 @@ public class GetMaterialsServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 	
-	private List<TableData> convert(List<Material> materials)
+	private List<TableData> convert(List<Constants> constants)
 	{
 		int count = 0;
-		List<TableData> materialList = new ArrayList<TableData>();
-		for(Material material : materials)
+		List<TableData> constantList = new ArrayList<TableData>();
+		for(Constants constant : constants)
 		{
 			TableData data = new TableData();
 			data.setId(++count);
-			//String[] materialData = new String[5];
-			BaseRateJson materialObj = new BaseRateJson();
-			materialObj.setCode(material.getCode());
-			materialObj.setDescription(new String(material.getDescription()));
-			materialObj.setUnit(material.getUnit());
-			materialObj.setQuantity(material.getQuantity());
-			materialObj.setPrice(material.getPrice());
+			//String[] constantData = new String[5];
+			BaseRateJson constantObj = new BaseRateJson();
+			constantObj.setCode(constant.getCode());
+			constantObj.setDescription(new String(constant.getDescription()));
+			constantObj.setUnit(constant.getUnit());
+			constantObj.setQuantity(constant.getQuantity());
+			constantObj.setPrice(constant.getPrice());
 			
-			data.setValues(materialObj);
-			materialList.add(data);
+			data.setValues(constantObj);
+			constantList.add(data);
 		}
-		return materialList;
+		return constantList;
 		
 	}
 	
-	public static String getMaterials() {
+	public static String getConstants() {
 		// TODO Auto-generated method stub
 		// get our query builder from the DAO
-		QueryBuilder<Material, ?> queryBuilder = Connection.getMaterialDao().queryBuilder();
+		QueryBuilder<Constants, ?> queryBuilder = Connection.getConstantDao().queryBuilder();
 		// the 'title' field must be equal to title (a variable)
 		try {
 			// prepare our sql statement
-			PreparedQuery<Material> preparedQuery = queryBuilder.prepare();
+			PreparedQuery<Constants> preparedQuery = queryBuilder.prepare();
 
 			// query for all stories that have that title
-			List<Material> materialsList = Connection.getMaterialDao().query(preparedQuery);
+			List<Constants> constantsList = Connection.getConstantDao().query(preparedQuery);
 
-			return new Gson().toJson(materialsList);
+			return new Gson().toJson(constantsList);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,5 +154,3 @@ public class GetMaterialsServlet extends HttpServlet {
 	}
 
 }
-
-

@@ -1,6 +1,6 @@
 package com.manish.analysis.model;
 
-public class MaterialJson{
+public class BaseRateJson{
 	protected String code;
 	protected String description;
 	protected String unit;
@@ -38,7 +38,7 @@ public class MaterialJson{
 		this.price = price;
 	}
 	
-	public MaterialJson()
+	public BaseRateJson()
 	{
 		code = null;
 		description = null;

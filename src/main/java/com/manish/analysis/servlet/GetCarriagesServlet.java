@@ -17,34 +17,31 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.Data;
 import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
 import com.manish.analysis.util.Util;
-import com.manish.model.Material;
-
+import com.manish.model.Carriage;
 
 /**
- * Servlet implementation class GetMaterialsServlet
+ * Servlet implementation class GetCarriagesServlet
  */
-public class GetMaterialsServlet extends HttpServlet {
+public class GetCarriagesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-	
-    public GetMaterialsServlet() {
+    public GetCarriagesServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		PrintWriter writer = response.getWriter();
@@ -52,12 +49,12 @@ public class GetMaterialsServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getMaterials();
+		String json = getCarriages();
 		
-		Type listType = new TypeToken<ArrayList<Material>>() {}.getType();
+		Type listType = new TypeToken<ArrayList<Carriage>>() {}.getType();
         
-		List<Material> materials = new Gson().fromJson(json, listType);
-		data.setData(convert(materials));
+		List<Carriage> carriages = new Gson().fromJson(json, listType);
+		data.setData(convert(carriages));
 		
 		String mode = request.getParameter("mode");
 		
@@ -112,42 +109,41 @@ public class GetMaterialsServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 	
-	private List<TableData> convert(List<Material> materials)
+	private List<TableData> convert(List<Carriage> carriages)
 	{
 		int count = 0;
-		List<TableData> materialList = new ArrayList<TableData>();
-		for(Material material : materials)
+		List<TableData> carriageList = new ArrayList<TableData>();
+		for(Carriage carriage : carriages)
 		{
 			TableData data = new TableData();
 			data.setId(++count);
-			//String[] materialData = new String[5];
-			BaseRateJson materialObj = new BaseRateJson();
-			materialObj.setCode(material.getCode());
-			materialObj.setDescription(new String(material.getDescription()));
-			materialObj.setUnit(material.getUnit());
-			materialObj.setQuantity(material.getQuantity());
-			materialObj.setPrice(material.getPrice());
+			BaseRateJson carriageObj = new BaseRateJson();
+			carriageObj.setCode(carriage.getCode());
+			carriageObj.setDescription(new String(carriage.getDescription()));
+			carriageObj.setUnit(carriage.getUnit());
+			carriageObj.setQuantity(carriage.getQuantity());
+			carriageObj.setPrice(carriage.getPrice());
 			
-			data.setValues(materialObj);
-			materialList.add(data);
+			data.setValues(carriageObj);
+			carriageList.add(data);
 		}
-		return materialList;
+		return carriageList;
 		
 	}
 	
-	public static String getMaterials() {
+	public static String getCarriages() {
 		// TODO Auto-generated method stub
 		// get our query builder from the DAO
-		QueryBuilder<Material, ?> queryBuilder = Connection.getMaterialDao().queryBuilder();
+		QueryBuilder<Carriage, ?> queryBuilder = Connection.getCarriageDao().queryBuilder();
 		// the 'title' field must be equal to title (a variable)
 		try {
 			// prepare our sql statement
-			PreparedQuery<Material> preparedQuery = queryBuilder.prepare();
+			PreparedQuery<Carriage> preparedQuery = queryBuilder.prepare();
 
 			// query for all stories that have that title
-			List<Material> materialsList = Connection.getMaterialDao().query(preparedQuery);
+			List<Carriage> carriagesList = Connection.getCarriageDao().query(preparedQuery);
 
-			return new Gson().toJson(materialsList);
+			return new Gson().toJson(carriagesList);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,5 +153,3 @@ public class GetMaterialsServlet extends HttpServlet {
 	}
 
 }
-
-
