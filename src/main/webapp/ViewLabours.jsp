@@ -53,7 +53,8 @@
 	
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
- 			editableGrid.onloadJSON("./GetLabours?mode=view"); 
+ 			editableGrid.onloadJSON("./GetLabours?mode=view");
+ 			editableGrid.firstPage();
 		} 
 		
 	</script>

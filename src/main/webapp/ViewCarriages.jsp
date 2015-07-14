@@ -49,11 +49,13 @@
 	<script type="text/javascript">
 		$(document).ready( function () {	
 			$(document.body).addClass('loading');
+			
 		});
 	
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
- 			editableGrid.onloadJSON("./GetCarriages?mode=view"); 
+ 			editableGrid.onloadJSON("./GetCarriages?mode=view");
+ 			editableGrid.firstPage();
 		} 
 		
 	</script>

@@ -58,6 +58,7 @@
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
  			editableGrid.onloadJSON("./GetMaterials?mode=edit"); 
+ 			editableGrid.firstPage();
 		} 
 		
 		function tableLoaded(){

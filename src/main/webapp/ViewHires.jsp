@@ -54,6 +54,7 @@
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
  			editableGrid.onloadJSON("./GetHires?mode=view"); 
+ 			editableGrid.firstPage();
 		} 
 		
 	</script>

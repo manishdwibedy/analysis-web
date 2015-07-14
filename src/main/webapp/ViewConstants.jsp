@@ -54,6 +54,7 @@
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
  			editableGrid.onloadJSON("./GetConstants?mode=view"); 
+ 			editableGrid.firstPage();
 		} 
 		
 	</script>

@@ -58,9 +58,9 @@
 			    unit = this.innerHTML;
 			});
 			$('#SelectUnit').click(function() {
-				
-				
+				$(document.body).addClass('loading');
 				editableGrid.onloadJSON("./GetItems?mode=view&unit="+unit);
+				editableGrid.firstPage();
 			});
 			
 		});
