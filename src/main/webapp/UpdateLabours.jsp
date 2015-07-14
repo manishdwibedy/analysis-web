@@ -78,15 +78,24 @@
 						if(data.success)
 						{
 							changes = [];
+							$('#response').addClass('alert-success');
+							$('#response').text(data.response);
+							$('#response').show();
 							console.log("success");	
 						}
 						else
 						{
+							$('#response').addClass('alert-danger');
+							$('#response').text(data.response);
+							$('#response').show();
 							console.log("could not save");
 						}
 						
 					},
 					error : function(data) {
+						$('#response').addClass('alert-danger');
+						$('#response').text("Could not save!");
+						$('#response').show();
 						console.log("error");
 					}
 					
@@ -155,6 +164,8 @@
         <section class="content">
         
         	<div id="message" style="display:none"></div>
+
+			<div id="response" class="alert" role="alert" style="display:none"></div>
 
 			<!--  Number of rows per page and bars in chart -->
 			<div id="pagecontrol">
