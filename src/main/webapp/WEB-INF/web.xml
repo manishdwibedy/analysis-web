@@ -21,13 +21,53 @@
 		<description></description>
 		<servlet-class>com.manish.analysis.servlet.UpdateMaterialsServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>GetLaboursServlet</servlet-name>
+		<display-name>GetLaboursServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.GetLaboursServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetHiresServlet</servlet-name>
+		<display-name>GetHiresServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.GetHiresServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetCarriagesServlet</servlet-name>
+		<display-name>GetCarriagesServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.GetCarriagesServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetConstantsServlet</servlet-name>
+		<display-name>GetConstantsServlet</display-name>
+		<description></description>
+		<servlet-class>com.manish.analysis.servlet.GetConstantsServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>GetMaterialsServlet</servlet-name>
-		<url-pattern>/GetMaterialsServlet</url-pattern>
+		<url-pattern>/GetMaterials</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>UpdateMaterialsServlet</servlet-name>
-		<url-pattern>/UpdateMaterialsServlet</url-pattern>
+		<url-pattern>/UpdateMaterials</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetLaboursServlet</servlet-name>
+		<url-pattern>/GetLabours</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetHiresServlet</servlet-name>
+		<url-pattern>/GetHires</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetCarriagesServlet</servlet-name>
+		<url-pattern>/GetCarriages</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetConstantsServlet</servlet-name>
+		<url-pattern>/GetConstants</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

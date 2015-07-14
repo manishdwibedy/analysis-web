@@ -9,16 +9,24 @@
 <body>
 	<%
 	String pageName = request.getParameter("page");
-	String showIndex="", showData="";
+	String showIndex="", showMaterials ="", showViewMaterials="", showUpdateMaterials = "";
 	
 	if (pageName.equalsIgnoreCase("index"))		
 		showIndex = "active";
-	else if (pageName.equalsIgnoreCase("data"))
-		showData = "active";
+	else if (pageName.equalsIgnoreCase("viewmaterials"))
+	{
+		showMaterials = "active";
+		showViewMaterials = "active";
+	}
+	else if (pageName.equalsIgnoreCase("updatematerials"))
+	{
+		showMaterials = "active";
+		showUpdateMaterials = "active";
+	}
 	
 %>
 	<%= request.getParameter("page") %>
-	<%= showIndex %>
+	<%= showUpdateMaterials %>
 
 	<ul class="sidebar-menu">
 
@@ -27,7 +35,7 @@
 			<a href="./index.jsp"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
 		</li>
 
-		<li class="treeview">
+		<li class="treeview <%= showMaterials %>">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span>Materials</span>
@@ -35,8 +43,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="#"><i class="fa fa-circle-o"></i>Add a material</a></li>
-            <li><a href="./ViewMaterials.jsp"><i class="fa fa-circle-o"></i>View Materials</a></li>
-            <li><a href="./UpdateMaterials.jsp"><i class="fa fa-circle-o"></i>Update materials</a></li>
+            <li class="<%= showViewMaterials %>"><a href="./ViewMaterials.jsp"><i class="fa fa-circle-o"></i>View Materials</a></li>
+            <li class="<%= showUpdateMaterials %>"><a href="./UpdateMaterials.jsp"><i class="fa fa-circle-o"></i>Update materials</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Delete materials</a></li>
           </ul>
         </li>

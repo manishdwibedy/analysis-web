@@ -51,11 +51,13 @@
 // 		}; 
 	</script>
 	
+	<link rel="stylesheet" type="text/css" href="./css/style.css" media="screen"/>
+	
 	<script type="text/javascript">
 		var changes = [];
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
- 			editableGrid.onloadJSON("./GetMaterialsServlet?mode=edit"); 
+ 			editableGrid.onloadJSON("./GetMaterials?mode=edit"); 
 		} 
 		
 		function tableLoaded(){
@@ -67,7 +69,7 @@
 			$("#UpdateMaterials").click(function() {
 				console.log(changes);
 				$.ajax({
-					url : "./UpdateMaterialsServlet",
+					url : "./UpdateMaterials",
 					data : {
 						changes : JSON.stringify(changes)			// look here!
 					},
@@ -129,7 +131,7 @@
           
           
           <jsp:include page="./common/sidebar.jsp">
-          <jsp:param name="page" value="data" />
+          	<jsp:param name="page" value="updatematerials" />
           </jsp:include>
         </section>
         <!-- /.sidebar -->
@@ -144,8 +146,8 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Tables</a></li>
-            <li class="active">Data tables</li>
+            <li><a href="#">Materials</a></li>
+            <li class="active">Update Materials</li>
           </ol>
         </section>
 

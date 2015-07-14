@@ -53,7 +53,7 @@
 	
 		window.onload = function() { 
 			//editableGrid.onloadJSON("grid.json");
- 			editableGrid.onloadJSON("./GetMaterialsServlet?mode=view"); 
+ 			editableGrid.onloadJSON("./GetMaterials?mode=view"); 
 		} 
 		
 	</script>
@@ -91,7 +91,7 @@
           
           
           <jsp:include page="./common/sidebar.jsp">
-          <jsp:param name="page" value="data" />
+          <jsp:param name="page" value="viewmaterials" />
           </jsp:include>
         </section>
         <!-- /.sidebar -->
@@ -102,13 +102,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Data Tables
-            <small>advanced tables</small>
+            View Materials
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Tables</a></li>
-            <li class="active">Data tables</li>
+            <li><a href="#">Materials</a></li>
+            <li class="active">View All Materials</li>
           </ol>
         </section>
 
