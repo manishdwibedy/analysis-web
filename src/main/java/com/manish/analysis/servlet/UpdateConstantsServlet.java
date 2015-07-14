@@ -89,7 +89,7 @@ public class UpdateConstantsServlet extends HttpServlet {
 		
 		if(responseObj.isSuccess())
 		{
-			responseObj.setResponse(changes.size() + " Materials Updated.");
+			responseObj.setResponse(changes.size() + " Constant(s) Updated.");
 		}
 		
 		

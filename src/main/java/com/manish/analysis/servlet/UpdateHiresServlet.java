@@ -87,7 +87,7 @@ public class UpdateHiresServlet extends HttpServlet {
 		
 		if(responseObj.isSuccess())
 		{
-			responseObj.setResponse(changes.size() + " Materials Updated.");
+			responseObj.setResponse(changes.size() + " Hire(s) Updated.");
 		}
 		
 		

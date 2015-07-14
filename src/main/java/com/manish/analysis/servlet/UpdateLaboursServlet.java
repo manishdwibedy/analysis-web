@@ -87,7 +87,7 @@ public class UpdateLaboursServlet extends HttpServlet {
 		
 		if(responseObj.isSuccess())
 		{
-			responseObj.setResponse(changes.size() + " Materials Updated.");
+			responseObj.setResponse(changes.size() + " Labour(s) Updated.");
 		}
 		
 		
