@@ -2,7 +2,7 @@ package com.manish.analysis.model;
 
 public class TableData {
 		private int id;
-		private BaseRateJson values;
+		private BasicRateJson values;
 		
 		public int getId() {
 			return id;
@@ -10,10 +10,10 @@ public class TableData {
 		public void setId(int id) {
 			this.id = id;
 		}
-		public BaseRateJson getValues() {
+		public BasicRateJson getValues() {
 			return values;
 		}
-		public void setValues(BaseRateJson values) {
+		public void setValues(BasicRateJson values) {
 			this.values = values;
 		}
 }

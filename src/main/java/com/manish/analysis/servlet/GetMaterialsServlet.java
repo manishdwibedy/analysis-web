@@ -18,9 +18,10 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
 import com.manish.analysis.model.Data;
-import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.BasicRateJson;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
+import com.manish.analysis.util.BaseRateUtil;
 import com.manish.analysis.util.Util;
 import com.manish.model.Material;
 
@@ -52,7 +53,7 @@ public class GetMaterialsServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getMaterials();
+		String json = BaseRateUtil.getMaterial();
 		
 		Type listType = new TypeToken<ArrayList<Material>>() {}.getType();
         
@@ -121,7 +122,7 @@ public class GetMaterialsServlet extends HttpServlet {
 			TableData data = new TableData();
 			data.setId(++count);
 			//String[] materialData = new String[5];
-			BaseRateJson materialObj = new BaseRateJson();
+			BasicRateJson materialObj = new BasicRateJson();
 			materialObj.setCode(material.getCode());
 			materialObj.setDescription(new String(material.getDescription()));
 			materialObj.setUnit(material.getUnit());
@@ -135,26 +136,7 @@ public class GetMaterialsServlet extends HttpServlet {
 		
 	}
 	
-	public static String getMaterials() {
-		// TODO Auto-generated method stub
-		// get our query builder from the DAO
-		QueryBuilder<Material, ?> queryBuilder = Connection.getMaterialDao().queryBuilder();
-		// the 'title' field must be equal to title (a variable)
-		try {
-			// prepare our sql statement
-			PreparedQuery<Material> preparedQuery = queryBuilder.prepare();
-
-			// query for all stories that have that title
-			List<Material> materialsList = Connection.getMaterialDao().query(preparedQuery);
-
-			return new Gson().toJson(materialsList);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
+	
 
 }
 

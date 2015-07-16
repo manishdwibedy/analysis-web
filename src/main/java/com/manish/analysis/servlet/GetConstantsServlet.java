@@ -17,10 +17,11 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.BasicRateJson;
 import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
+import com.manish.analysis.util.BaseRateUtil;
 import com.manish.analysis.util.Util;
 import com.manish.model.Constants;
 
@@ -49,7 +50,7 @@ public class GetConstantsServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getConstants();
+		String json = BaseRateUtil.getConstant();
 		
 		Type listType = new TypeToken<ArrayList<Constants>>() {}.getType();
         
@@ -118,7 +119,7 @@ public class GetConstantsServlet extends HttpServlet {
 			TableData data = new TableData();
 			data.setId(++count);
 			//String[] constantData = new String[5];
-			BaseRateJson constantObj = new BaseRateJson();
+			BasicRateJson constantObj = new BasicRateJson();
 			constantObj.setCode(constant.getCode());
 			constantObj.setDescription(new String(constant.getDescription()));
 			constantObj.setUnit(constant.getUnit());
@@ -132,25 +133,6 @@ public class GetConstantsServlet extends HttpServlet {
 		
 	}
 	
-	public static String getConstants() {
-		// TODO Auto-generated method stub
-		// get our query builder from the DAO
-		QueryBuilder<Constants, ?> queryBuilder = Connection.getConstantDao().queryBuilder();
-		// the 'title' field must be equal to title (a variable)
-		try {
-			// prepare our sql statement
-			PreparedQuery<Constants> preparedQuery = queryBuilder.prepare();
-
-			// query for all stories that have that title
-			List<Constants> constantsList = Connection.getConstantDao().query(preparedQuery);
-
-			return new Gson().toJson(constantsList);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
+	
 
 }

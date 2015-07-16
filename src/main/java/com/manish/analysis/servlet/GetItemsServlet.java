@@ -5,7 +5,9 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.BasicRateJson;
 import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
@@ -33,8 +35,15 @@ public class GetItemsServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	Map<String,String> unitMapping = new HashMap<String, String>();
     public GetItemsServlet() {
         super();
+        unitMapping.put("Earth Work", "2");
+        unitMapping.put("Mortar", "3");
+        unitMapping.put("Concrete Work", "4");
+        unitMapping.put("Reinforced Cement Concrete", "5");
+        unitMapping.put("Brick Work", "6");
+        unitMapping.put("Stone Work", "7");
         // TODO Auto-generated constructor stub
     }
 
@@ -51,7 +60,7 @@ public class GetItemsServlet extends HttpServlet {
 		
 		String mode = request.getParameter("mode");
 		String unit = request.getParameter("unit");
-		String json = getItems(unit);
+		String json = getItems(unitMapping.get(unit));
 		
 		Type listType = new TypeToken<ArrayList<Item>>() {}.getType();
         
@@ -119,7 +128,7 @@ public class GetItemsServlet extends HttpServlet {
 		{
 			TableData data = new TableData();
 			data.setId(++count);
-			BaseRateJson itemObj = new BaseRateJson();
+			BasicRateJson itemObj = new BasicRateJson();
 			itemObj.setCode(item.getCode());
 			itemObj.setDescription(new String(item.getDescription()));
 			itemObj.setUnit(item.getUnit());

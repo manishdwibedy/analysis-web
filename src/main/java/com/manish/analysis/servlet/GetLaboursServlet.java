@@ -17,10 +17,11 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.BasicRateJson;
 import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
+import com.manish.analysis.util.BaseRateUtil;
 import com.manish.analysis.util.Util;
 import com.manish.model.Labour;
 import com.manish.model.Material;
@@ -50,7 +51,7 @@ public class GetLaboursServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getLabours();
+		String json = BaseRateUtil.getLabour();
 		
 		Type listType = new TypeToken<ArrayList<Labour>>() {}.getType();
         
@@ -119,7 +120,7 @@ public class GetLaboursServlet extends HttpServlet {
 			TableData data = new TableData();
 			data.setId(++count);
 			//String[] materialData = new String[5];
-			BaseRateJson labourObj = new BaseRateJson();
+			BasicRateJson labourObj = new BasicRateJson();
 			labourObj.setCode(labour.getCode());
 			labourObj.setDescription(new String(labour.getDescription()));
 			labourObj.setUnit(labour.getUnit());
@@ -132,27 +133,4 @@ public class GetLaboursServlet extends HttpServlet {
 		return labourList;
 		
 	}
-	
-	public static String getLabours() {
-		// TODO Auto-generated method stub
-		// get our query builder from the DAO
-		QueryBuilder<Labour, ?> queryBuilder = Connection.getLabourDao().queryBuilder();
-		// the 'title' field must be equal to title (a variable)
-		try {
-			// prepare our sql statement
-			PreparedQuery<Labour> preparedQuery = queryBuilder.prepare();
-
-			// query for all stories that have that title
-			List<Labour> laboursList = Connection.getLabourDao().query(preparedQuery);
-
-			return new Gson().toJson(laboursList);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
-
-
 }

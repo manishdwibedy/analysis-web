@@ -17,10 +17,11 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.BasicRateJson;
 import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
+import com.manish.analysis.util.BaseRateUtil;
 import com.manish.analysis.util.Util;
 import com.manish.model.Hire;
 
@@ -49,7 +50,7 @@ public class GetHiresServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getHires();
+		String json = BaseRateUtil.getHire();
 		
 		Type listType = new TypeToken<ArrayList<Hire>>() {}.getType();
         
@@ -118,7 +119,7 @@ public class GetHiresServlet extends HttpServlet {
 			TableData data = new TableData();
 			data.setId(++count);
 			//String[] hireData = new String[5];
-			BaseRateJson hireObj = new BaseRateJson();
+			BasicRateJson hireObj = new BasicRateJson();
 			hireObj.setCode(hire.getCode());
 			hireObj.setDescription(new String(hire.getDescription()));
 			hireObj.setUnit(hire.getUnit());
@@ -131,28 +132,4 @@ public class GetHiresServlet extends HttpServlet {
 		return hireList;
 		
 	}
-	
-	public static String getHires() {
-		// TODO Auto-generated method stub
-		// get our query builder from the DAO
-		QueryBuilder<Hire, ?> queryBuilder = Connection.getHireDao().queryBuilder();
-		// the 'title' field must be equal to title (a variable)
-		try {
-			// prepare our sql statement
-			PreparedQuery<Hire> preparedQuery = queryBuilder.prepare();
-
-			// query for all stories that have that title
-			List<Hire> hiresList = Connection.getHireDao().query(preparedQuery);
-
-			return new Gson().toJson(hiresList);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
-
-
-
 }

@@ -131,11 +131,11 @@ EditableGrid.prototype.initializeGrid = function()
 			// this action will remove the row, so first find the ID of the row containing this cell 
 			var rowId = editableGrid.getRowId(cell.rowIndex);
 
-			cell.innerHTML = "<a onclick=\"if (confirm('Are you sure you want to delete this person ? ')) { editableGrid.remove(" + cell.rowIndex + "); editableGrid.renderCharts(); } \" style=\"cursor:pointer\">" +
-			"<img src=\"" + image("delete.png") + "\" border=\"0\" alt=\"delete\" title=\"Delete row\"/></a>";
+			console.log(getValueAt(rowId-1, 0));
+			cell.innerHTML = "<a href=\"ViewItemDetail.jsp?code=" + getValueAt(rowId-1,0) + "\">" +
+			"<img src=\"" + image("information.png") + "\" border=\"0\" alt=\"info\" title=\"View Detail\"/></a>";
 
-			cell.innerHTML+= "&nbsp;<a onclick=\"editableGrid.duplicate(" + cell.rowIndex + ");\" style=\"cursor:pointer\">" +
-			"<img src=\"" + image("duplicate.png") + "\" border=\"0\" alt=\"duplicate\" title=\"Duplicate row\"/></a>";
+			
 
 		}})); 
 

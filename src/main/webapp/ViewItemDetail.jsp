@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.manish.analysis.model.ItemJson" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
@@ -27,50 +28,29 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <!-- include javascript and css files for the EditableGrid library -->
-	<script src="./js/editablegrid.js"></script>
-	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_renderers.js" ></script>
-	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_editors.js" ></script>
-	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_validators.js" ></script>
-	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_utils.js" ></script>
-	<!-- [DO NOT DEPLOY] --> <script src="./js/editablegrid_charts.js" ></script>
-	<link rel="stylesheet" href="./css/editablegrid.css" type="text/css" media="screen">
-
-	<!-- include javascript and css files for jQuery, needed for the datepicker and autocomplete extensions -->
-	<script src="./js/extensions/jquery/jquery-1.6.4.min.js" ></script>
-	<script src="./js/extensions/jquery/jquery-ui-1.8.16.custom.min.js" ></script>
-	<link rel="stylesheet" href="./js/extensions/jquery/jquery-ui-1.8.16.custom.css" type="text/css" media="screen">
-	
-	
-   	<script src="./js/demo.js" ></script>
-	<link rel="stylesheet" type="text/css" href="./css/demo.css" media="screen"/>
-	
-	<link rel="stylesheet" type="text/css" href="./css/style.css" media="screen"/>
-	<script type="text/javascript">
-		$(document).ready( function () {	
-			//$(document.body).addClass('loading');
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" media="screen"/>
+    
+    <script>
+    
+    $.ajax({
+		url : "./GetItemDetails",
+		data : {
+			code : '<%= request.getParameter("code") %>'
+		},
+		dataType : 'text',
+		success : function(data) {
+			$('#ItemDetails').html(data);
 			
-			$('.dropdown-inverse li > a').click(function(e){
-			    $('.status').text(this.innerHTML);
-			});
-			var unit = '';
-			$('.dropdown-inverse li > a').click(function(e){
-			    unit = this.innerHTML;
-			});
-			$('#SelectUnit').click(function() {
-				$(document.body).addClass('loading');
-				editableGrid.onloadJSON("./GetItems?mode=view&unit="+unit);
-				editableGrid.firstPage();
-			});
-			
-		});
-	
-		window.onload = function() { 
-			//editableGrid.onloadJSON("grid.json");
- 			//editableGrid.onloadJSON("./GetItems?mode=view&unit"); 
-		} 
+		},
+		error : function(data) {
+			$('#ItemDetails').text("Error!");
+			console.log("error"+data);
+		}
 		
-	</script>
+	});
+    </script>
   </head>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
@@ -105,7 +85,7 @@
           
           
           <jsp:include page="./common/sidebar.jsp">
-          	<jsp:param name="page" value="viewitemsbyunit" />
+          <jsp:param name="page" value="data" />
           </jsp:include>
         </section>
         <!-- /.sidebar -->
@@ -113,66 +93,29 @@
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
+		<!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            View Items
+            Header
+            <small>xyz</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Items</a></li>
-            <li class="active">View All Items</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> 1</a></li>
+            <li><a href="#">2</a></li>
+            <li class="active">3</li>
           </ol>
         </section>
-
+        
         <!-- Main content -->
         <section class="content">
-            
-            Select the unit to view : 
-            <div class="btn-group"> 
-			    <i class="dropdown-arrow dropdown-arrow-inverse"></i>
-			    <button class="btn btn-primary status">Select Unit</button>
-			    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span> 
-			    </button>
-			    <ul class="dropdown-menu dropdown-inverse">
-			        <li><a href="#">Earth Work</a></li>
-			        <li><a href="#">Mortar</a></li>
-			        <li><a href="#">Concrete Work</a></li>
-			        <li><a href="#">Reinforced Cement Concrete</a></li>
-			        <li><a href="#">Brick Work</a></li>
-			        <li><a href="#">Stone Work</a></li>
-			    </ul>
-			</div>
-
-			<button id="SelectUnit" type="button" class="btn btn-primary">View</button>
-			
-            <div id="message" style="display:none"></div>
-
-			<!--  Number of rows per page and bars in chart -->
-			<div id="pagecontrol">
-				<label for="pagecontrol">Rows per page: </label>
-				<select id="pagesize" name="pagesize">
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select>
-			</div>
-		
-			<!-- Grid filter -->
-			<label for="filter">Filter :</label>
-			<input type="text" id="filter"/>
-		
-			<!-- Grid contents -->
-			<div id="tablecontent"></div>
-			
-			<!-- Paginator control -->
-			<div id="paginator"></div>
-            
-            
-        </section><!-- /.content -->
+        
+        
+        
+        <div id="ItemDetails" class="container-fluid">
+		</div>
+        </section>
       </div><!-- /.content-wrapper -->
+      
       <footer class="main-footer">
         <jsp:include page="./common/footer.jsp" />
       </footer>
@@ -187,11 +130,6 @@
       <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
 
-	
-	
-	
-    <!-- jQuery 2.1.4 -->
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- DATA TABES SCRIPT -->
@@ -205,7 +143,7 @@
     <script src="dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
-
+    <!-- page script -->
 
   </body>
 </html>

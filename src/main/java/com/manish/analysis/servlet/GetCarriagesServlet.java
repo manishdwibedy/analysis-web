@@ -17,10 +17,11 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.manish.analysis.db.Connection;
-import com.manish.analysis.model.BaseRateJson;
+import com.manish.analysis.model.BasicRateJson;
 import com.manish.analysis.model.Data;
 import com.manish.analysis.model.Metadata;
 import com.manish.analysis.model.TableData;
+import com.manish.analysis.util.BaseRateUtil;
 import com.manish.analysis.util.Util;
 import com.manish.model.Carriage;
 
@@ -49,7 +50,7 @@ public class GetCarriagesServlet extends HttpServlet {
 		Data data = new Data();
 		response.setContentType("application/json");     
 		
-		String json = getCarriages();
+		String json = BaseRateUtil.getCarriage();
 		
 		Type listType = new TypeToken<ArrayList<Carriage>>() {}.getType();
         
@@ -117,7 +118,7 @@ public class GetCarriagesServlet extends HttpServlet {
 		{
 			TableData data = new TableData();
 			data.setId(++count);
-			BaseRateJson carriageObj = new BaseRateJson();
+			BasicRateJson carriageObj = new BasicRateJson();
 			carriageObj.setCode(carriage.getCode());
 			carriageObj.setDescription(new String(carriage.getDescription()));
 			carriageObj.setUnit(carriage.getUnit());
@@ -131,25 +132,6 @@ public class GetCarriagesServlet extends HttpServlet {
 		
 	}
 	
-	public static String getCarriages() {
-		// TODO Auto-generated method stub
-		// get our query builder from the DAO
-		QueryBuilder<Carriage, ?> queryBuilder = Connection.getCarriageDao().queryBuilder();
-		// the 'title' field must be equal to title (a variable)
-		try {
-			// prepare our sql statement
-			PreparedQuery<Carriage> preparedQuery = queryBuilder.prepare();
-
-			// query for all stories that have that title
-			List<Carriage> carriagesList = Connection.getCarriageDao().query(preparedQuery);
-
-			return new Gson().toJson(carriagesList);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
+	
 
 }
