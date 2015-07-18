@@ -17,15 +17,15 @@ import com.manish.model.Item;
 import com.manish.util.ItemUtils;
 
 /**
- * Servlet implementation class GetItemDetailsServlet
+ * Servlet implementation class UpdateItemDetailsServlet
  */
-public class GetItemDetailsServlet extends HttpServlet {
+public class UpdateItemDetailsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetItemDetailsServlet() {
+    public UpdateItemDetailsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -84,9 +84,14 @@ public class GetItemDetailsServlet extends HttpServlet {
 			if(ItemUtil.containsNumbers(input.getUnit()))
 				quantity = Float.parseFloat(ItemUtils.stripCharacters(input.getUnit()));
 			float inputPrice = input.getQuantity() * input.getPrice() /  quantity;
-			tableContent += "<div class='row'><div class='col-md-1'>"+ getPaddedCode(input.getCode()) + "</div><div class='col-md-7'>" + input.getDescription() 
-					+ "</div><div class='col-md-1'>" + input.getUnit() + "</div><div class='col-md-1'>" + threePlaces.format(input.getQuantity()) 
-					+ "</div><div class='col-md-1'>" + twoPlaces.format(input.getPrice()) + "</div><div class='col-md-1'><span class='pull-right'>" + twoPlaces.format(inputPrice) + "</span></div></div>";
+			tableContent += "<div class='row'>" +
+					"<div class='col-md-1'>"+ getPaddedCode(input.getCode()) + "</div>" +
+					"<div class='col-md-7'><span class='inputDesc' id='" + input.getCode() + "'>"  + input.getDescription() +  "</span></div>" +
+					"<div class='col-md-1'><span class='inputUnit' id='" + input.getCode() + "'>" + input.getUnit() + "</span></div>" +
+					"<div class='col-md-1'><span class='inputQuantity' id='" + input.getCode() + "'>" + threePlaces.format(input.getQuantity()) + "</span></div>" +
+					"<div class='col-md-1'> <span class='inputPrice' id='" + input.getCode() + "'>" + twoPlaces.format(input.getPrice()) + "</span></div>" +
+					"<div class='col-md-1'><span class='pull-right inputAmount' id='" +input.getCode() +"'>" + twoPlaces.format(inputPrice) + "</span></div>" +
+					"</div>";
 			price += inputPrice;
 		}
 		tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Total</span></div><div class='col-md-4'><span class='pull-right'>Rs. "+ twoPlaces.format(price) + "</span></div></div>";
@@ -121,7 +126,7 @@ public class GetItemDetailsServlet extends HttpServlet {
 	private String getPaddedCode(String code)
 	{
 		String pad = "";
-		for(int len = code.length() ; len <= 4 ; len++)
+		for(int len = code.length() ; len < 4 ; len++)
 		{
 			pad += "0";
 		}

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,9 +24,17 @@ import com.manish.model.ItemInput;
 import com.manish.model.Labour;
 import com.manish.model.Material;
 import com.manish.util.ItemUtils;
+import com.manish.util.ParsingItemsUtils;
 
 public class ItemUtil {
 
+	private static String numbersPresentPattern = "(.)*(\\d)+(.)*";
+	private static Pattern numbersPresentRegex;
+	
+	static{
+		numbersPresentRegex = Pattern.compile(numbersPresentPattern);
+	}
+	
 	public static Item getItem(String code) {
 		// TODO Auto-generated method stub
 		// get our query builder from the DAO
@@ -218,8 +227,21 @@ public class ItemUtil {
 	public static BasicRateJson convert2Basic(ItemInput input) {
 		// TODO Auto-generated method stub
 		BasicRateJson inputObj = new BasicRateJson();
-		inputObj.setCode(ItemUtils.stripZeroes(inputObj.getCode()));
-		inputObj.setQuantity(inputObj.getQuantity());
+		
+		Item item = ItemUtil.getItem(ItemUtils.stripZeroes(input.getCode()));
+		inputObj.setCode(ItemUtils.stripZeroes(input.getCode()));
+		inputObj.setDescription(new String(item.getDescription()));
+		inputObj.setUnit(item.getUnit());
+		inputObj.setPrice(item.getPrice());
+		//inputObj.set
+		inputObj.setQuantity(input.getQuantity());
 		return inputObj;
 	}
+	
+
+	public static boolean containsNumbers(String line)
+	{
+		return numbersPresentRegex.matcher(line).matches();
+	}
+	
 }
