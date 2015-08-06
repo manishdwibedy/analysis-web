@@ -86,31 +86,34 @@ public class UpdateItemDetailsServlet extends HttpServlet {
 			float inputPrice = input.getQuantity() * input.getPrice() /  quantity;
 			tableContent += "<div class='row'>" +
 					"<div class='col-md-1'>"+ getPaddedCode(input.getCode()) + "</div>" +
-					"<div class='col-md-7'><span class='inputDesc' id='" + input.getCode() + "'>"  + input.getDescription() +  "</span></div>" +
-					"<div class='col-md-1'><span class='inputUnit' id='" + input.getCode() + "'>" + input.getUnit() + "</span></div>" +
-					"<div class='col-md-1'><span class='inputQuantity' id='" + input.getCode() + "'>" + threePlaces.format(input.getQuantity()) + "</span></div>" +
-					"<div class='col-md-1'> <span class='inputPrice' id='" + input.getCode() + "'>" + twoPlaces.format(input.getPrice()) + "</span></div>" +
-					"<div class='col-md-1'><span class='pull-right inputAmount' id='" +input.getCode() +"'>" + twoPlaces.format(inputPrice) + "</span></div>" +
+					"<div class='col-md-7'><span class='inputDesc' id='Desc_" + input.getCode() + "'>"  + input.getDescription() +  "</span></div>" +
+					"<div class='col-md-1'><span class='inputUnit' id='Unit_" + input.getCode() + "'>" + input.getUnit() + "</span></div>" +
+					"<div class='col-md-1'><span class='inputQuantity' id='Quantity_" + input.getCode() + "'>" + threePlaces.format(input.getQuantity()) + "</span></div>" +
+					"<div class='col-md-1'> " +
+					"<input type='text' class='form-control inputRate' id='Rate_" + input.getCode() + "' placeholder='" + twoPlaces.format(input.getPrice()) + "'></div>" +
+					"<div class='col-md-1'><span class='pull-right inputAmount' id='Amount_" +input.getCode() +"'>" + twoPlaces.format(inputPrice) + "</span></div>" +
 					"</div>";
 			price += inputPrice;
 		}
-		tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Total</span></div><div class='col-md-4'><span class='pull-right'>Rs. "+ twoPlaces.format(price) + "</span></div></div>";
+		tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Total</span></div><div class='col-md-4'><span id='SubTotal' class='pull-right'>Rs. "+ twoPlaces.format(price) + "</span></div></div>";
 		
 		if(item.getConstants()!=null)
 		{
+			int index = 1;
 			for(BasicRateJson constant : item.getConstants())
 			{
 				float constantPrice = constant.getPrice() / 100 * price;
-				tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Adding for " + constant.getDescription() + " @ "+ constant.getPrice() 
-						+"%</span></div><div class='col-md-4'><span class='pull-right'>Rs. "+ twoPlaces.format(constantPrice) + "</span></div></div>";
+				tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Adding for " + constant.getDescription() + " @ " +
+						"<span class='Constant' id='Constant_"+ constant.getDescription() + "'>" + constant.getPrice() +
+						"</span>%</span></div><div class='col-md-4'><span class='pull-right'" + " id='Constant_" + index + "'>Rs. "+ twoPlaces.format(constantPrice) + "</span></div></div>";
 				price += constantPrice;
-				tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Total " + "</span></div><div class='col-md-4'><span class='pull-right'>Rs. " +
-							twoPlaces.format(price) + "</span></div></div>";
+				tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Total " + "</span></div>" +
+						"<div class='col-md-4'><span class='pull-right' id='SubTotal_" + index + "'>Rs. " +	twoPlaces.format(price) + "</span></div></div>";
 			}
 		}
 		
-		tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Cost for " + item.getQuantity() + " " + item.getUnit() + 
-				"</span></div><div class='col-md-4'><span class='pull-right'>Rs. "+ twoPlaces.format(price) + "</span></div></div>";
+		tableContent += "<div class='row'><div class='col-md-8'><span class='pull-right'>Cost for <span id='itemQuantity>'" + item.getQuantity() + "</span> " +
+					item.getUnit() + "</span></div><div class='col-md-4'><span id='Total_1' class='pull-right'>Rs. "+ twoPlaces.format(price) + "</span></div></div>";
 		
 		if(item.getQuantity()!=1)
 		{

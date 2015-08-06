@@ -134,6 +134,10 @@ EditableGrid.prototype.initializeGrid = function()
 			console.log(getValueAt(rowId-1, 0));
 			cell.innerHTML = "<a href=\"ViewItemDetail.jsp?code=" + getValueAt(rowId-1,0) + "\">" +
 			"<img src=\"" + image("information.png") + "\" border=\"0\" alt=\"info\" title=\"View Detail\"/></a>";
+			
+			
+			cell.innerHTML = "<a href=\"UpdateItemDetail.jsp?code=" + getValueAt(rowId-1,0) + "\">" +
+			"<img src=\"" + image("information.png") + "\" border=\"0\" alt=\"info\" title=\"Update Detail\"/></a>";
 
 			
 

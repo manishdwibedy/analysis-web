@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.manish.analysis.model.ItemJson" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
@@ -26,6 +27,63 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" media="screen"/>
+    
+    <script>
+    
+    $.ajax({
+		url : "./UpdateItemDetails",
+		data : {
+			code : '<%= request.getParameter("code") %>'
+		},
+		dataType : 'text',
+		success : function(data) {
+			$('#ItemDetails').html(data);
+			$(".inputRate").on("change", function(e) {
+	    	    var code = this.id.substr(5);
+	    	    var amount = parseFloat(parseFloat($('#Quantity_'+code).text()) * parseFloat(this.value)).toFixed(2);
+	    	    $('#Amount_'+code).text(amount);
+	    	    calculateSubTotal();
+	    	});
+		},
+		error : function(data) {
+			$('#ItemDetails').text("Error!");
+			console.log("error"+data);
+		}
+		
+	});
+
+	function calculateSubTotal()
+	{
+		var subTotal = 0;
+		jQuery('.inputAmount').each(function(index, currentElement) {
+		    subTotal += parseFloat($(this).text());
+		});
+		
+		$('#SubTotal').text('Rs. '+subTotal.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+		
+		
+	}
+	
+	function calculateAdditions()
+	{
+		var constantAmount = 0;
+		var subTotal = parseFloat($('#SubTotal').text());
+		jQuery('.Constant').each(function(index, currentElement) {
+		    constantAmount += parseFloat($(this).text()) / 100 * subTotal;
+		    $('#Constant_'+(index+1)).text('Rs. '+constantAmount.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+		    
+		    subTotal += constantAmount;
+		    $('#SubTotal_'+(index+1)).text('Rs. '+subTotal.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+		});
+		
+		$('#SubTotal').text('Rs. '+subTotal.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+	}
+    
+    </script>
   </head>
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
@@ -71,8 +129,7 @@
 		<!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Header
-            <small>xyz</small>
+            Item Detail
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> 1</a></li>
@@ -84,8 +141,10 @@
         <!-- Main content -->
         <section class="content">
         
-        <div class='row'><div class='col-md-12'><div class='row'><div class='col-md-1'>5.28</div><div class='col-md-11'>Providing and fixing in position 12 mm thick bitumen impregnated fibre board conforming to IS: 1838,</div></div><br/><hr class='item'><div class='row'><div class='col-md-1'>Code</div><div class='col-md-7'>Description</div><div class='col-md-1'>Unit</div><div class='col-md-1'>Quantity</div><div class='col-md-1'>Rate</div><div class='col-md-1'>Amount</div></div><hr class='item'><br/><div class='row'><div class='col-md-1'>00314</div><div class='col-md-7'>Bitumen hot sealing compound : grade A</div><div class='col-md-1'>kilogram</div><div class='col-md-1'><span class='inputQuantity' id='314'>31.50</span></div><div class='col-md-1'> <span class='inputPrice' id='314'>28.00</span></div><div class='col-md-1'><span class='pull-right inputAmount' id='314'>882.00</span></div></div><div class='row'><div class='col-md-1'>00316</div><div class='col-md-7'>Bitumen solution primer of approved quality</div><div class='col-md-1'>litre</div><div class='col-md-1'><span class='inputQuantity' id='316'>1.25</span></div><div class='col-md-1'> <span class='inputPrice' id='316'>50.00</span></div><div class='col-md-1'><span class='pull-right inputAmount' id='316'>62.50</span></div></div><div class='row'><div class='col-md-1'>00339</div><div class='col-md-7'>Flame retardant face insulating, Impregnated fibre board 12 mm thick</div><div class='col-md-1'>sqm</div><div class='col-md-1'><span class='inputQuantity' id='339'>7.50</span></div><div class='col-md-1'> <span class='inputPrice' id='339'>350.00</span></div><div class='col-md-1'><span class='pull-right inputAmount' id='339'>2,625.00</span></div></div><div class='row'><div class='col-md-1'>09999</div><div class='col-md-7'>Sundries</div><div class='col-md-1'>L.S.</div><div class='col-md-1'><span class='inputQuantity' id='9999'>53.82</span></div><div class='col-md-1'> <span class='inputPrice' id='9999'>1.78</span></div><div class='col-md-1'><span class='pull-right inputAmount' id='9999'>95.80</span></div></div><div class='row'><div class='col-md-1'>00114</div><div class='col-md-7'>Beldar</div><div class='col-md-1'>day</div><div class='col-md-1'><span class='inputQuantity' id='114'>0.25</span></div><div class='col-md-1'> <span class='inputPrice' id='114'>329.00</span></div><div class='col-md-1'><span class='pull-right inputAmount' id='114'>82.25</span></div></div><div class='row'><div class='col-md-1'>00123</div><div class='col-md-7'>Mason (brick layer) 1 st class</div><div class='col-md-1'>day</div><div class='col-md-1'><span class='inputQuantity' id='123'>0.12</span></div><div class='col-md-1'> <span class='inputPrice' id='123'>435.00</span></div><div class='col-md-1'><span class='pull-right inputAmount' id='123'>52.20</span></div></div><div class='row'><div class='col-md-1'>00124</div><div class='col-md-7'>Mason (brick layer) 2nd class</div><div class='col-md-1'>day</div><div class='col-md-1'><span class='inputQuantity' id='124'>0.12</span></div><div class='col-md-1'> <span class='inputPrice' id='124'>399.00</span></div><div class='col-md-1'><span class='pull-right inputAmount' id='124'>47.88</span></div></div><div class='row'><div class='col-md-8'><span class='pull-right'>Total</span></div><div class='col-md-4'><span class='pull-right'>Rs. 3,847.63</span></div></div><div class='row'><div class='col-md-8'><span class='pull-right'>Adding for CPOH @ 15.0%</span></div><div class='col-md-4'><span class='pull-right'>Rs. 577.14</span></div></div><div class='row'><div class='col-md-8'><span class='pull-right'>Total </span></div><div class='col-md-4'><span class='pull-right'>Rs. 4,424.77</span></div></div><div class='row'><div class='col-md-8'><span class='pull-right'>Adding for Water @ 1.0%</span></div><div class='col-md-4'><span class='pull-right'>Rs. 44.25</span></div></div><div class='row'><div class='col-md-8'><span class='pull-right'>Total </span></div><div class='col-md-4'><span class='pull-right'>Rs. 4,469.02</span></div></div><div class='row'><div class='col-md-8'><span class='pull-right'>Cost for 1.0 cm</span></div><div class='col-md-4'><span class='pull-right'>Rs. 4,469.02</span></div></div></div></div>
         
+        
+        <div id="ItemDetails" class="container-fluid">
+		</div>
         </section>
       </div><!-- /.content-wrapper -->
       
@@ -103,8 +162,6 @@
       <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- DATA TABES SCRIPT -->
@@ -119,20 +176,6 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
     <!-- page script -->
-    <script type="text/javascript">
-      $(function () {
-        
-        var table = $('#example1').dataTable({
-        	"bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": false,
-            "bInfo": true,
-        	'bAutoWidth': false,
-        	"ajax": "./json.txt"
-        	});
-      });
-    </script>
 
   </body>
 </html>
